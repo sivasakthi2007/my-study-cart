@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,40 +6,41 @@
 
 @layer base {
   :root {
-    --background: 40 33% 98%;
-    --foreground: 220 20% 10%;
+    --background: 30 25% 97%;
+    --foreground: 230 25% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    --card-foreground: 230 25% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover-foreground: 230 25% 12%;
 
-    --primary: 25 95% 55%;
+    --primary: 16 90% 55%;
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 30 95% 62%;
 
-    --secondary: 220 60% 50%;
+    --secondary: 230 65% 55%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 40 20% 94%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 30 15% 93%;
+    --muted-foreground: 230 10% 42%;
 
-    --accent: 160 60% 45%;
+    --accent: 155 65% 42%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 80% 58%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 15% 88%;
-    --input: 40 15% 88%;
-    --ring: 25 95% 55%;
+    --border: 30 12% 90%;
+    --input: 30 12% 88%;
+    --ring: 16 90% 55%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
     --whatsapp: 142 70% 45%;
     --whatsapp-foreground: 0 0% 100%;
 
-    --upi: 270 60% 55%;
+    --upi: 260 65% 55%;
     --upi-foreground: 0 0% 100%;
 
     --sidebar-background: 0 0% 98%;
@@ -62,7 +63,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Sans', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -72,12 +73,28 @@
 
 @layer utilities {
   .gradient-hero {
-    background: linear-gradient(135deg, hsl(25 95% 55%), hsl(35 95% 60%));
+    background: linear-gradient(135deg, hsl(16 90% 55%), hsl(30 95% 62%), hsl(40 90% 65%));
+  }
+  .gradient-secondary {
+    background: linear-gradient(135deg, hsl(230 65% 55%), hsl(260 65% 60%));
+  }
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(155 65% 42%), hsl(170 60% 48%));
   }
   .gradient-card {
-    background: linear-gradient(145deg, hsl(0 0% 100%), hsl(40 33% 96%));
+    background: linear-gradient(160deg, hsl(0 0% 100%), hsl(30 20% 97%));
   }
   .shadow-product {
-    box-shadow: 0 4px 20px -4px hsl(25 95% 55% / 0.15);
+    box-shadow: 0 4px 24px -6px hsl(16 90% 55% / 0.12), 0 2px 8px -2px hsl(0 0% 0% / 0.06);
   }
+  .shadow-float {
+    box-shadow: 0 8px 32px -8px hsl(16 90% 55% / 0.25), 0 4px 12px -4px hsl(0 0% 0% / 0.1);
+  }
+  .glass {
+    background: hsl(0 0% 100% / 0.85);
+    backdrop-filter: blur(16px) saturate(1.8);
+    -webkit-backdrop-filter: blur(16px) saturate(1.8);
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }
