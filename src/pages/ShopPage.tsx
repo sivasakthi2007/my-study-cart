@@ -2,8 +2,7 @@ import { useState } from "react";
 import { stationeryProducts, categories } from "@/lib/data";
 import { useAppContext } from "@/context/AppContext";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Plus, Minus, MessageCircle } from "lucide-react";
+import { ShoppingCart, Plus, Minus, MessageCircle, Sparkles } from "lucide-react";
 import { WHATSAPP_NUMBER } from "@/lib/data";
 import { toast } from "sonner";
 
@@ -37,25 +36,37 @@ const ShopPage = () => {
 
   return (
     <div className="min-h-screen pb-20">
-      {/* Header */}
-      <header className="gradient-hero px-4 pb-6 pt-8">
-        <div className="mx-auto max-w-lg">
-          <h1 className="font-['Space_Grotesk'] text-2xl font-bold text-primary-foreground">📚 Campus Stationery</h1>
-          <p className="mt-1 text-sm text-primary-foreground/80">Order anytime, delivered to your hostel!</p>
+      {/* Hero Header */}
+      <header className="gradient-hero relative overflow-hidden px-4 pb-8 pt-10">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute left-[-20%] top-[-30%] h-64 w-64 rounded-full bg-primary-foreground/30 blur-3xl" />
+          <div className="absolute right-[-10%] bottom-[-20%] h-48 w-48 rounded-full bg-primary-foreground/20 blur-3xl" />
+        </div>
+        <div className="relative mx-auto max-w-lg">
+          <div className="flex items-center gap-2 text-primary-foreground/70 text-xs font-medium mb-1">
+            <Sparkles className="h-3.5 w-3.5" />
+            Campus Delivery
+          </div>
+          <h1 className="font-['Space_Grotesk'] text-3xl font-bold text-primary-foreground tracking-tight">
+            Stationery Store
+          </h1>
+          <p className="mt-1.5 text-sm text-primary-foreground/80 max-w-[260px]">
+            Everything you need, delivered to your hostel 🏠
+          </p>
         </div>
       </header>
 
       {/* Categories */}
-      <div className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-md px-4 py-3">
+      <div className="sticky top-0 z-40 border-b border-border glass px-4 py-3">
         <div className="mx-auto flex max-w-lg gap-2 overflow-x-auto no-scrollbar">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`shrink-0 rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
+              className={`shrink-0 rounded-full px-4 py-1.5 text-sm font-semibold transition-all duration-300 ${
                 activeCategory === cat
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  ? "bg-primary text-primary-foreground shadow-sm scale-105"
+                  : "bg-muted text-muted-foreground hover:bg-muted/70 active:scale-95"
               }`}
             >
               {cat}
@@ -65,41 +76,49 @@ const ShopPage = () => {
       </div>
 
       {/* Products Grid */}
-      <div className="mx-auto max-w-lg px-4 py-4">
-        <div className="grid grid-cols-2 gap-3">
+      <div className="mx-auto max-w-lg px-4 py-5">
+        <div className="grid grid-cols-2 gap-3.5">
           {filtered.map((product, i) => {
             const inCart = cart.find((c) => c.id === product.id);
             return (
               <div
                 key={product.id}
-                className="gradient-card animate-fade-in rounded-xl border border-border p-3 shadow-product"
-                style={{ animationDelay: `${i * 50}ms` }}
+                className="group relative animate-fade-in-scale overflow-hidden rounded-2xl border border-border bg-card p-3.5 shadow-product transition-all duration-300 hover:shadow-float hover:-translate-y-0.5"
+                style={{ animationDelay: `${i * 60}ms`, opacity: 0 }}
               >
-                <div className="mb-2 text-4xl">{product.image}</div>
-                <h3 className="font-['Space_Grotesk'] text-sm font-semibold leading-tight">{product.name}</h3>
-                <p className="mt-0.5 text-xs text-muted-foreground">{product.description}</p>
-                <div className="mt-2 flex items-center justify-between">
-                  <span className="font-['Space_Grotesk'] text-lg font-bold text-primary">₹{product.price}</span>
+                <div className="mb-2.5 flex h-14 w-14 items-center justify-center rounded-xl bg-muted text-3xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  {product.image}
+                </div>
+                <h3 className="font-['Space_Grotesk'] text-[13px] font-bold leading-tight text-foreground">{product.name}</h3>
+                <p className="mt-0.5 text-[11px] text-muted-foreground line-clamp-1">{product.description}</p>
+                <div className="mt-2.5 flex items-center justify-between">
+                  <span className="font-['Space_Grotesk'] text-lg font-extrabold text-primary">₹{product.price}</span>
                   {inCart ? (
-                    <div className="flex items-center gap-1">
-                      <Button size="icon" variant="outline" className="h-7 w-7" onClick={() => updateQty(product.id, inCart.qty - 1)}>
-                        <Minus className="h-3 w-3" />
-                      </Button>
-                      <span className="w-6 text-center text-sm font-semibold">{inCart.qty}</span>
-                      <Button size="icon" variant="outline" className="h-7 w-7" onClick={() => updateQty(product.id, inCart.qty + 1)}>
-                        <Plus className="h-3 w-3" />
-                      </Button>
+                    <div className="flex items-center gap-1 animate-fade-in-scale">
+                      <button
+                        onClick={() => updateQty(product.id, inCart.qty - 1)}
+                        className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted text-foreground transition-all active:scale-90"
+                      >
+                        <Minus className="h-3.5 w-3.5" />
+                      </button>
+                      <span className="w-6 text-center text-sm font-bold">{inCart.qty}</span>
+                      <button
+                        onClick={() => updateQty(product.id, inCart.qty + 1)}
+                        className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-all active:scale-90"
+                      >
+                        <Plus className="h-3.5 w-3.5" />
+                      </button>
                     </div>
                   ) : (
                     <Button
                       size="sm"
-                      className="h-8 text-xs"
+                      className="h-8 rounded-lg px-3.5 text-xs font-semibold transition-all active:scale-90"
                       onClick={() => {
                         addToCart({ id: product.id, name: product.name, price: product.price, image: product.image });
                         toast.success(`${product.name} added!`);
                       }}
                     >
-                      Add
+                      <Plus className="h-3.5 w-3.5 mr-0.5" /> Add
                     </Button>
                   )}
                 </div>
@@ -109,60 +128,72 @@ const ShopPage = () => {
         </div>
       </div>
 
-      {/* Cart Floating Button */}
+      {/* Floating Cart Button */}
       {cart.length > 0 && !showCart && (
-        <div className="fixed bottom-16 left-0 right-0 z-40 px-4">
+        <div className="fixed bottom-16 left-0 right-0 z-40 px-4 animate-slide-up">
           <button
             onClick={() => setShowCart(true)}
-            className="mx-auto flex w-full max-w-lg items-center justify-between rounded-xl bg-primary px-5 py-3 text-primary-foreground shadow-lg"
+            className="mx-auto flex w-full max-w-lg items-center justify-between rounded-2xl gradient-hero px-5 py-3.5 text-primary-foreground shadow-float transition-all active:scale-[0.98] animate-pulse-glow"
           >
-            <div className="flex items-center gap-2">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="font-semibold">{cart.length} item(s)</span>
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-foreground/20">
+                <ShoppingCart className="h-4.5 w-4.5" />
+              </div>
+              <div className="text-left">
+                <span className="text-xs text-primary-foreground/70">{cart.length} item(s)</span>
+                <p className="text-[11px] text-primary-foreground/60">Tap to view cart</p>
+              </div>
             </div>
-            <span className="font-['Space_Grotesk'] text-lg font-bold">₹{cartTotal}</span>
+            <span className="font-['Space_Grotesk'] text-xl font-bold">₹{cartTotal}</span>
           </button>
         </div>
       )}
 
       {/* Cart Sheet */}
       {showCart && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-foreground/40" onClick={() => setShowCart(false)}>
-          <div className="w-full max-w-lg rounded-t-2xl bg-card p-5" onClick={(e) => e.stopPropagation()}>
-            <div className="mb-4 flex items-center justify-between">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-foreground/50 backdrop-blur-sm animate-fade-in" onClick={() => setShowCart(false)}>
+          <div className="w-full max-w-lg rounded-t-3xl bg-card p-6 animate-slide-up" onClick={(e) => e.stopPropagation()}>
+            <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-border" />
+            <div className="mb-5 flex items-center justify-between">
               <h2 className="font-['Space_Grotesk'] text-xl font-bold">Your Cart</h2>
-              <button onClick={() => setShowCart(false)} className="text-muted-foreground">✕</button>
+              <button onClick={() => setShowCart(false)} className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-muted-foreground transition-all hover:bg-muted/70">
+                ✕
+              </button>
             </div>
-            <div className="max-h-60 space-y-3 overflow-y-auto">
+            <div className="max-h-56 space-y-2.5 overflow-y-auto pr-1">
               {cart.map((item) => (
-                <div key={item.id} className="flex items-center justify-between rounded-lg bg-muted p-3">
-                  <div>
-                    <span className="mr-2">{item.image}</span>
-                    <span className="text-sm font-medium">{item.name}</span>
+                <div key={item.id} className="flex items-center justify-between rounded-xl bg-muted/60 p-3">
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-2xl">{item.image}</span>
+                    <div>
+                      <span className="text-sm font-semibold">{item.name}</span>
+                      <p className="text-xs text-muted-foreground">x{item.qty} · ₹{item.price} each</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">x{item.qty}</span>
-                    <span className="font-semibold">₹{item.price * item.qty}</span>
-                    <button onClick={() => removeFromCart(item.id)} className="text-destructive text-xs">✕</button>
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-['Space_Grotesk'] font-bold text-primary">₹{item.price * item.qty}</span>
+                    <button onClick={() => removeFromCart(item.id)} className="flex h-6 w-6 items-center justify-center rounded-full bg-destructive/10 text-destructive text-xs transition-all hover:bg-destructive/20">
+                      ✕
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 border-t border-border pt-4">
-              <div className="mb-4 flex justify-between text-lg font-bold">
-                <span>Total</span>
-                <span className="text-primary">₹{cartTotal}</span>
+            <div className="mt-5 border-t border-border pt-4">
+              <div className="mb-4 flex justify-between items-baseline">
+                <span className="text-muted-foreground font-medium">Total</span>
+                <span className="font-['Space_Grotesk'] text-2xl font-extrabold text-primary">₹{cartTotal}</span>
               </div>
               <div className="flex gap-3">
-                <Button variant="whatsapp" className="flex-1 gap-2" onClick={() => handleOrder("cod")}>
-                  <MessageCircle className="h-4 w-4" /> COD
+                <Button variant="whatsapp" className="flex-1 gap-2 h-12 rounded-xl text-sm font-semibold" onClick={() => handleOrder("cod")}>
+                  <MessageCircle className="h-4 w-4" /> Cash on Delivery
                 </Button>
-                <Button variant="upi" className="flex-1 gap-2" onClick={() => handleOrder("upi")}>
+                <Button variant="upi" className="flex-1 gap-2 h-12 rounded-xl text-sm font-semibold" onClick={() => handleOrder("upi")}>
                   💳 UPI Pay
                 </Button>
               </div>
-              <p className="mt-2 text-center text-xs text-muted-foreground">
-                Order via WhatsApp • UPI to {WHATSAPP_NUMBER}
+              <p className="mt-3 text-center text-[11px] text-muted-foreground">
+                Order via WhatsApp · UPI to {WHATSAPP_NUMBER}
               </p>
             </div>
           </div>
