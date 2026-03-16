@@ -56,6 +56,14 @@ export default {
           DEFAULT: "hsl(var(--upi))",
           foreground: "hsl(var(--upi-foreground))",
         },
+        sunshine: {
+          DEFAULT: "hsl(var(--sunshine))",
+          foreground: "hsl(var(--sunshine-foreground))",
+        },
+        coral: {
+          DEFAULT: "hsl(var(--coral))",
+          foreground: "hsl(var(--coral-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -82,11 +90,11 @@ export default {
           to: { height: "0" },
         },
         "fade-in": {
-          from: { opacity: "0", transform: "translateY(12px)" },
+          from: { opacity: "0", transform: "translateY(16px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
         "fade-in-scale": {
-          from: { opacity: "0", transform: "scale(0.92) translateY(8px)" },
+          from: { opacity: "0", transform: "scale(0.9) translateY(10px)" },
           to: { opacity: "1", transform: "scale(1) translateY(0)" },
         },
         "slide-up": {
@@ -95,17 +103,30 @@ export default {
         },
         "bounce-in": {
           "0%": { transform: "scale(0.3)", opacity: "0" },
-          "50%": { transform: "scale(1.05)" },
+          "50%": { transform: "scale(1.08)" },
           "70%": { transform: "scale(0.95)" },
           "100%": { transform: "scale(1)", opacity: "1" },
         },
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 0 0 hsl(16 90% 55% / 0.4)" },
-          "50%": { boxShadow: "0 0 0 10px hsl(16 90% 55% / 0)" },
+          "0%, 100%": { boxShadow: "0 0 0 0 hsl(270 95% 60% / 0.4)" },
+          "50%": { boxShadow: "0 0 0 12px hsl(270 95% 60% / 0)" },
         },
         shimmer: {
           from: { backgroundPosition: "-200% 0" },
           to: { backgroundPosition: "200% 0" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-6px)" },
+        },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "25%": { transform: "rotate(-3deg)" },
+          "75%": { transform: "rotate(3deg)" },
+        },
+        "spin-slow": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
         },
       },
       animation: {
@@ -117,6 +138,9 @@ export default {
         "bounce-in": "bounce-in 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)",
         "pulse-glow": "pulse-glow 2s infinite",
         shimmer: "shimmer 2s linear infinite",
+        float: "float 3s ease-in-out infinite",
+        wiggle: "wiggle 1s ease-in-out infinite",
+        "spin-slow": "spin-slow 8s linear infinite",
       },
     },
   },
