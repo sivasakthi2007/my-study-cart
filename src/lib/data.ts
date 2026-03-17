@@ -28,6 +28,7 @@ export interface Order {
 }
 
 export const WHATSAPP_NUMBER = "6383605984";
+export const UPI_ID = "6383605984@okaxis";
 
 export const stationeryProducts: Product[] = [
   { id: "1", name: "XO Pen Set", price: 120, category: "Pens", image: "🖊️", description: "Premium gel pen set for smooth writing" },

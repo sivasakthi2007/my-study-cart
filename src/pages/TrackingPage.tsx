@@ -1,5 +1,8 @@
 import { useAppContext } from "@/context/AppContext";
-import { Package, Clock, CheckCircle, Truck, MapPin, Radar } from "lucide-react";
+import { WHATSAPP_NUMBER, UPI_ID } from "@/lib/data";
+import { Button } from "@/components/ui/button";
+import { Package, Clock, CheckCircle, Truck, Radar, MessageCircle, Copy } from "lucide-react";
+import { toast } from "sonner";
 
 const statusConfig = {
   pending: { icon: Clock, label: "Pending", color: "text-sunshine", bg: "bg-sunshine/10 border-sunshine/30" },
@@ -13,6 +16,17 @@ const statusSteps = ["pending", "confirmed", "ready", "delivered"] as const;
 const TrackingPage = () => {
   const { orders } = useAppContext();
   const activeOrders = orders.filter((o) => o.status !== "delivered");
+
+  const copyUPI = () => {
+    navigator.clipboard.writeText(UPI_ID);
+    toast.success("UPI ID copied!");
+  };
+
+  const payViaWhatsApp = (order: typeof orders[0]) => {
+    const itemsList = order.items.map((i) => `• ${i.name} x${i.qty} - ₹${i.price * i.qty}`).join("\n");
+    const msg = `💳 *Payment for Order ${order.id}*\n\n${itemsList}\n\n💰 Total: ₹${order.total}\n📲 UPI ID: ${UPI_ID}\n\nI have completed the payment. Please confirm.`;
+    window.open(`https://wa.me/91${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+  };
 
   return (
     <div className="min-h-screen pb-24">
@@ -81,9 +95,31 @@ const TrackingPage = () => {
                         <p key={j} className="text-sm text-muted-foreground">{item.name} <span className="text-foreground font-bold">×{item.qty}</span></p>
                       ))}
                     </div>
+
+                    {/* Payment Section */}
+                    {order.status === "pending" && (
+                      <div className="mt-4 rounded-2xl bg-muted/50 p-4 space-y-3">
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">💳 Pay via UPI</p>
+                        <button
+                          onClick={copyUPI}
+                          className="flex w-full items-center justify-between rounded-xl border-2 border-dashed border-border bg-card px-4 py-3 transition-all hover:border-primary/50 active:scale-[0.98]"
+                        >
+                          <span className="font-['Outfit'] text-sm font-black text-foreground">{UPI_ID}</span>
+                          <Copy className="h-4 w-4 text-muted-foreground" />
+                        </button>
+                        <div className="flex gap-2">
+                          <Button variant="whatsapp" className="flex-1 gap-2 h-11 rounded-xl text-xs font-bold" onClick={() => payViaWhatsApp(order)}>
+                            <MessageCircle className="h-4 w-4" /> Confirm on WhatsApp
+                          </Button>
+                        </div>
+                        <p className="text-[11px] text-muted-foreground text-center">
+                          Pay ₹{order.total} to UPI ID above, then confirm via WhatsApp
+                        </p>
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center justify-between border-t border-border/50 bg-muted/30 px-5 py-3">
-                    <span className="text-xs text-muted-foreground font-semibold">{order.paymentMethod === "cod" ? "💵 Cash on Delivery" : "💳 UPI"}</span>
+                    <span className="text-xs text-muted-foreground font-semibold">💳 UPI Payment</span>
                     <span className="font-['Outfit'] text-lg font-black text-gradient">₹{order.total}</span>
                   </div>
                 </div>
