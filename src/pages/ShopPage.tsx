@@ -74,28 +74,32 @@ const ShopPage = () => {
 
       {/* Products */}
       <div className="mx-auto max-w-lg px-4 py-5">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="flex flex-col gap-4">
           {filtered.map((product, i) => (
             <div
               key={product.id}
-              className="group relative animate-fade-in-scale overflow-hidden rounded-3xl border border-border/60 bg-card p-4 shadow-product transition-all duration-300 hover:shadow-float hover:-translate-y-1"
+              className="group animate-fade-in-scale overflow-hidden rounded-3xl border border-border/60 bg-card shadow-product transition-all duration-300 hover:shadow-float hover:-translate-y-1"
               style={{ animationDelay: `${i * 50}ms`, opacity: 0 }}
             >
-              {/* Emoji icon */}
-              <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-muted to-muted/50 text-4xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
-                {product.image}
-              </div>
-              <h3 className="font-['Outfit'] text-sm font-bold leading-tight text-foreground">{product.name}</h3>
-              <p className="mt-0.5 text-[11px] text-muted-foreground line-clamp-1">{product.description}</p>
-              <div className="mt-3 flex items-center justify-between">
-                <span className="font-['Outfit'] text-xl font-black text-gradient">₹{product.price}</span>
-                <Button
-                  size="sm"
-                  className="h-9 rounded-xl px-4 text-xs font-bold gradient-hero border-0 text-primary-foreground shadow-glow-primary transition-all active:scale-90 hover:shadow-float"
-                  onClick={() => handleBuy(product)}
-                >
-                  <ShoppingBag className="h-3.5 w-3.5 mr-0.5" /> Buy
-                </Button>
+              <div className="flex items-center gap-4 p-5">
+                {/* Emoji icon */}
+                <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-muted to-muted/50 text-5xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+                  {product.image}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-['Outfit'] text-base font-bold leading-tight text-foreground">{product.name}</h3>
+                  <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{product.description}</p>
+                  <div className="mt-3 flex items-center justify-between">
+                    <span className="font-['Outfit'] text-2xl font-black text-gradient">₹{product.price}</span>
+                    <Button
+                      size="sm"
+                      className="h-10 rounded-xl px-5 text-sm font-bold gradient-hero border-0 text-primary-foreground shadow-glow-primary transition-all active:scale-90 hover:shadow-float"
+                      onClick={() => handleBuy(product)}
+                    >
+                      <ShoppingBag className="h-4 w-4 mr-1" /> Buy Now
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
